@@ -46,21 +46,23 @@ function test(){
 //make jquery event listener on html element btn that draws a card
 //when card is drawn, add it to "card-display"
 
+
+
+//3
+
 //https://api.jquery.com/ready/ 
 //jquery func waits for DOM to load below
 $(function() {
 
-
+    //if deck undef or outta cards
+    
     $btn.click(function(){ //handles drawing new card
 
-        //if deck undef or outta cards
-        if(cardsDrawn >= 52){//52 cards in deck
-            return alert(`The Deck is Empty!`)
-        }
-
-        if(!deck){//for this assignment keep drawing cards till dekc runs out
+        if(!deck){
             $.getJSON(`${baseUrl}deck/new/draw/?count=1`)
             .then(data => {
+                         
+
                 console.log(`drawing first card from new gen deck...`);
                 
                 deck = data.deck_id;
@@ -77,26 +79,32 @@ $(function() {
                 
             $.getJSON(`${baseUrl}deck/${deck}/draw/?count=1`)
             .then(data => {
-                
+                if(cardsDrawn >= 52){//52 cards in deck
+                    // $cardDisplay.empty()
+                    // showCard(currentCard);
+            
+                    $('#btn-stuff').remove();
+                    console.log('poo')
+                    return alert(`The Deck is Empty!`);
+                }      
+
                 console.log(`drawing from deck currently in play...`);
-                $cardDisplay.empty()
+                
                 cardsDrawn++;
 
                 currentCard = data.cards[0]
                 console.log({currentCard});                
 
-                showCard(currentCard);
+                if(currentCard){
+                    $cardDisplay.empty()
+                    showCard(currentCard);
+                }
             });
-            // .then(data => {
-            //     console.log({data})
-            //     console.log(`${card1.value} of ${card1.suit}`)
-            //     console.log(`${data.cards[0].value} of ${data.cards[0].suit}`)
-            // });
         }
-
-        //append currentCard.image to the div id="card-display" element
-
-    });
+    
+        });
+    
+    
     
   });
 
