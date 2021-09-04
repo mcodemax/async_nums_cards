@@ -72,7 +72,6 @@ $(function() {
 
                 showCard(currentCard);
 
-                return $.getJSON(`${baseUrl}deck/${deck}/draw/?count=1`);
             })
             
         }else{
